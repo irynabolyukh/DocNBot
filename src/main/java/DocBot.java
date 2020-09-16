@@ -44,6 +44,4 @@ public class DocBot extends TelegramLongPollingBot {
         return "1221107279:AAELDUoVdMPkzcNM8Z4QdwqjGuesP9UiQ-4";
     }
 
-
-
 }
