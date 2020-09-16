@@ -15,7 +15,10 @@
             <artifactId>telegrambots</artifactId>
             <version>4.9.1</version>
         </dependency>
+<<<<<<< HEAD
 
+=======
+>>>>>>> f75d64818e61eb6329464fbf9a02645d3c07ae5b
 
         <!-- SLF4J Bridge -->
         <dependency>

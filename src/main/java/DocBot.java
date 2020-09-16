@@ -22,7 +22,7 @@ public class DocBot extends TelegramLongPollingBot {
 
     }
 
-   public String getResponsesArray(String messageFromTheCustomer){
+    public String getResponsesArray(String messageFromTheCustomer){
 
         if(messageFromTheCustomer.equals("/start")){
             return "Твій Бот-Лікар на місці!";
@@ -33,11 +33,8 @@ public class DocBot extends TelegramLongPollingBot {
         else if(messageFromTheCustomer.contains("болить")){
             return "Опиши свій біль?";
         }
-        else if(messageFromTheCustomer.contains("дякую")){
-            return "Звертайтесь! Щось ще?";
-        }
         return "Гарного здоров‘ячка ;)";
-   }
+    }
 
     public String getBotUsername() {
         return "docHelpNaUKMA_bot";
@@ -46,7 +43,5 @@ public class DocBot extends TelegramLongPollingBot {
     public String getBotToken() {
         return "1221107279:AAELDUoVdMPkzcNM8Z4QdwqjGuesP9UiQ-4";
     }
-
-
 
 }
