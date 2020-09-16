@@ -33,6 +33,9 @@ public class DocBot extends TelegramLongPollingBot {
         else if(messageFromTheCustomer.contains("болить")){
             return "Опиши свій біль?";
         }
+        else if(messageFromTheCustomer.contains("дякую")){
+            return "Звертайтесь! Щось ще?";
+        }
         return "Гарного здоров‘ячка ;)";
    }
 
