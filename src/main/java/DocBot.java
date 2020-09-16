@@ -6,21 +6,13 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public class DocBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
 
-
-        String userInput = update.getMessage().getText();
         SendMessage message = new SendMessage();
 
-        String hello = "Твій Бот-Лікар на місці, чим я можу допомогти?";
-        String hello2 = "Привіт, що тебе хвилює?";
+        String userInput = update.getMessage().getText();
 
-        message.setText(hello);
+        message.setText(getResponsesArray(userInput));
         message.setChatId(update.getMessage().getChatId());
 
-        if (userInput.equals("Привіт")) {
-
-            message.setText(hello2);
-            message.setChatId(update.getMessage().getChatId());
-        }
 
         try {
             execute(message);
@@ -29,6 +21,20 @@ public class DocBot extends TelegramLongPollingBot {
         }
 
     }
+
+   public String getResponsesArray(String messageFromTheCustomer){
+
+        if(messageFromTheCustomer.equals("/start")){
+            return "Твій Бот-Лікар на місці!";
+        }
+        else if(messageFromTheCustomer.contains("Привіт")){
+            return "Привіт, що тебе хвилює?";
+        }
+        else if(messageFromTheCustomer.contains("болить")){
+            return "Опиши свій біль?";
+        }
+        return "Гарного здоров‘ячка ;)";
+   }
 
     public String getBotUsername() {
         return "docHelpNaUKMA_bot";
