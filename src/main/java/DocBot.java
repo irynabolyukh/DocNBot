@@ -1,16 +1,20 @@
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class DocBot extends TelegramLongPollingBot {
+//    private String answer;
+
     public void onUpdateReceived(Update update) {
 
         SendMessage message = new SendMessage();
@@ -29,30 +33,65 @@ public class DocBot extends TelegramLongPollingBot {
 
     }
 
-
-   public String getResponsesArray(String messageFromTheCustomer) {
-
-
-        try{
-
-            Reader reader = Files.newBufferedReader(Paths.get("customer.json"));
-            ObjectMapper objectMapper = new ObjectMapper();
-
-            JsonNode parser = objectMapper.readTree(reader);
-
-            System.out.println(parser.path("id").asLong());
-            System.out.println(parser.path("name").asText());
-            System.out.println(parser.path("email").asText());
-            System.out.println(parser.path("age").asLong());
+    private static void parseEmployeeObject(JSONObject head)
+    {
+        JSONObject employeeObject = (JSONObject) head.get("голова");
+        String firstName = (String) employeeObject.get("лікар");
+        System.out.println(firstName);
+        String lastName = (String) employeeObject.get("болить");
+        System.out.println(lastName);
+    }
 
 
-        }catch (Exception ex) {
-            ex.printStackTrace();
+    public String JSONanswer(String s) throws IOException {
+        JSONParser jsonParser = new JSONParser();
+
+        if (s.contains("голов")){
+            try (FileReader reader = new FileReader("src/main/java/head.json"))
+            {
+                Object obj = jsonParser.parse(reader);
+                JSONArray phrasesList = (JSONArray) obj;
+                phrasesList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
+        else if (s.contains("рук")) {
+
+        }
+//        ObjectMapper mapper = new ObjectMapper();
+//        Map<String, Object> phrases = mapper.readValue(new File(
+//                "body.json"), new TypeReference<Map<String, Object>>() {
+//            });
+//        System.out.println(phrases.get("headache"));
+//        String jsonString = "{\"Id\":101, \"name\":\"Raja Ramesh\", \"address\":\"Madhapur\"}";
+//        ObjectNode node = mapper.readValue(jsonString, ObjectNode.class);
+//        if(phrases.has(s)) {
+//            String answer = String.valueOf(phrases.get("head"));
+//            return answer;
+//        }
+        return "Гарного здоров‘ячка";
+    }
 
 
-//       if(messageFromTheCustomer.equals("/start")){
+    public String getResponsesArray(String messageFromTheCustomer){
+
+        try {
+            return JSONanswer(messageFromTheCustomer);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Гарного здоров‘ячка";
+        }
+//        if(messageFromTheCustomer.equals("/start")){
 //            return "Твій Бот-Лікар на місці!";
+//        }
+//        else if(messageFromTheCustomer.contains("Привіт")){
+//            return "Привіт, що тебе хвилює?";
 //        }
 //        else if(messageFromTheCustomer.contains("Привіт")){
 //            return "Привіт, що тебе хвилює?";
@@ -61,10 +100,8 @@ public class DocBot extends TelegramLongPollingBot {
 //            return "Опиши свій біль?";
 //        }
 
-         return "Гарного здоров‘ячка ;)";
-   }
-
-
+//        return "Гарного здоров‘ячка ;)";
+    }
 
     public String getBotUsername() {
         return "docHelpNaUKMA_bot";
