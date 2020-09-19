@@ -50,8 +50,10 @@ public class DocBot extends TelegramLongPollingBot {
             try (FileReader reader = new FileReader("src/main/java/head.json"))
             {
                 Object obj = jsonParser.parse(reader);
-                JSONArray phrasesList = (JSONArray) obj;
-                phrasesList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
+                JSONObject jsonObj = (JSONObject) obj;
+                JSONObject head = (JSONObject) jsonObj.get("голова");
+                String firstName = (String) head.get("лікар");
+                System.out.println(firstName);
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -64,17 +66,6 @@ public class DocBot extends TelegramLongPollingBot {
         else if (s.contains("рук")) {
 
         }
-//        ObjectMapper mapper = new ObjectMapper();
-//        Map<String, Object> phrases = mapper.readValue(new File(
-//                "body.json"), new TypeReference<Map<String, Object>>() {
-//            });
-//        System.out.println(phrases.get("headache"));
-//        String jsonString = "{\"Id\":101, \"name\":\"Raja Ramesh\", \"address\":\"Madhapur\"}";
-//        ObjectNode node = mapper.readValue(jsonString, ObjectNode.class);
-//        if(phrases.has(s)) {
-//            String answer = String.valueOf(phrases.get("head"));
-//            return answer;
-//        }
         return "Гарного здоров‘ячка";
     }
 
