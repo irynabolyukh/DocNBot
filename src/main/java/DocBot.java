@@ -3,17 +3,26 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class DocBot extends TelegramLongPollingBot {
-//    private String answer;
+    JSONObject allPhrases;
+
+    {
+        JSONParser jsonParser = new JSONParser();
+        try (FileReader reader = new FileReader("src/main/java/phrases.json")) {
+            Object obj = jsonParser.parse(reader);
+            allPhrases = (JSONObject) obj;
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void onUpdateReceived(Update update) {
 
@@ -33,51 +42,21 @@ public class DocBot extends TelegramLongPollingBot {
 
     }
 
-    private static void parseEmployeeObject(JSONObject head)
-    {
-        JSONObject employeeObject = (JSONObject) head.get("голова");
-        String firstName = (String) employeeObject.get("лікар");
-        System.out.println(firstName);
-        String lastName = (String) employeeObject.get("болить");
-        System.out.println(lastName);
-    }
 
+    public String JSONanswer(String s) {
 
-    public String JSONanswer(String s) throws IOException {
-        JSONParser jsonParser = new JSONParser();
-
-        if (s.contains("голов")){
-            try (FileReader reader = new FileReader("src/main/java/head.json"))
-            {
-                Object obj = jsonParser.parse(reader);
-                JSONObject jsonObj = (JSONObject) obj;
-                JSONObject head = (JSONObject) jsonObj.get("голова");
-                String firstName = (String) head.get("лікар");
-                System.out.println(firstName);
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        else if (s.contains("рук")) {
-
+        if (s.contains("голов")) {
+            JSONObject head = (JSONObject) allPhrases.get("рука");
+            String firstName = (String) head.get("лікар");
+            System.out.println(firstName);
         }
         return "Гарного здоров‘ячка";
     }
 
 
-    public String getResponsesArray(String messageFromTheCustomer){
+    public String getResponsesArray(String messageFromTheCustomer) {
 
-        try {
-            return JSONanswer(messageFromTheCustomer);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "Гарного здоров‘ячка";
-        }
+        return JSONanswer(messageFromTheCustomer);
 //        if(messageFromTheCustomer.equals("/start")){
 //            return "Твій Бот-Лікар на місці!";
 //        }
