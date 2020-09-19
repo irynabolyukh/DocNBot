@@ -11,11 +11,14 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class DocBot extends TelegramLongPollingBot {
-    JSONObject allPhrases;
+    public static JSONObject allPhrases;
+    String fileName;
 
-    {
+    public DocBot(String fileName){
+        this.fileName = fileName;
+
         JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader("src/main/java/phrases.json")) {
+        try (FileReader reader = new FileReader(fileName)) {
             Object obj = jsonParser.parse(reader);
             allPhrases = (JSONObject) obj;
 
@@ -30,48 +33,17 @@ public class DocBot extends TelegramLongPollingBot {
 
         String userInput = update.getMessage().getText();
 
-        message.setText(getResponsesArray(userInput));
+        message.setText(AnswerGenerator.getResponse(userInput));
         message.setChatId(update.getMessage().getChatId());
-
 
         try {
             execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-
     }
 
 
-    public String JSONanswer(String s) {
-
-        if (s.contains("голов")) {
-            JSONObject head = (JSONObject) allPhrases.get("рука");
-            String firstName = (String) head.get("лікар");
-            System.out.println(firstName);
-        }
-        return "Гарного здоров‘ячка";
-    }
-
-
-    public String getResponsesArray(String messageFromTheCustomer) {
-
-        return JSONanswer(messageFromTheCustomer);
-//        if(messageFromTheCustomer.equals("/start")){
-//            return "Твій Бот-Лікар на місці!";
-//        }
-//        else if(messageFromTheCustomer.contains("Привіт")){
-//            return "Привіт, що тебе хвилює?";
-//        }
-//        else if(messageFromTheCustomer.contains("Привіт")){
-//            return "Привіт, що тебе хвилює?";
-//        }
-//        else if(messageFromTheCustomer.contains("болить")){
-//            return "Опиши свій біль?";
-//        }
-
-//        return "Гарного здоров‘ячка ;)";
-    }
 
     public String getBotUsername() {
         return "docHelpNaUKMA_bot";
