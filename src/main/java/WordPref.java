@@ -7,7 +7,6 @@ public class WordPref {
         if(userInput.contains(" мене ")) {
             String replaceWord = " вас ";
             String targetWord = " мене ";
-
             return check.replace(targetWord, replaceWord);
         }
 
