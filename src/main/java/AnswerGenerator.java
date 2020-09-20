@@ -1,22 +1,33 @@
-import com.google.inject.internal.cglib.proxy.$UndeclaredThrowableException;
 import org.json.simple.JSONObject;
 
 public class AnswerGenerator {
 
     public static String getResponse(String userInput){
 
-        if(userInput.toLowerCase().replace(" ", "").equals("так") ||
-                userInput.toLowerCase().replace(" ", "").equals("ні")){
-            return "Будь ласка, не будьте так небагатослівні.";
-        }else if(userInput.endsWith("?")) {
-            if (userInput.toLowerCase().contains("чому") || userInput.toLowerCase().contains("як") ||
-                    userInput.toLowerCase().contains("що робити") || userInput.toLowerCase().startsWith("коли")) {
-                return "Раджу вам звернутися до свого сімейного лікаря";
-            } else {
-                return "А чому ви питаєте?";
-            }
+        switch (userInput.toLowerCase()){
+            case "так":
+            case "ні":
+                return "Будь ласка, не будьте так небагатослівні.";
+        }
 
-        }else if (userInput.contains("голов")) {
+        if(userInput.endsWith("?")) {
+            if (userInput.toLowerCase().contains("чому")) {
+                return WordPref.changePref(userInput) + "Чому то дуже важко і поки я не маю відповіді на таке важке запитання, " +
+                        "чекайде апдейтів :) ";
+            }
+            if(userInput.toLowerCase().contains("як")){
+                return "Вас цікавить  " + WordPref.changePref(userInput);
+            }
+            if(userInput.toLowerCase().contains("коли")){
+                return "Час плинний, то мені важко відповісти, але ваше питання \" " +
+                        WordPref.changePref(userInput) + "\" дуже цікаве ";
+            }
+            else {
+                return "Дивне питаннячко, сформулюйте будь ласка по іншому";
+            }
+        }
+
+        if (userInput.contains("голов")) {
             JSONObject head = (JSONObject) DocBot.allPhrases.get("рука");
 
             if(userInput.contains("бол")){
