@@ -5,6 +5,7 @@
 * JDK 1.8
 ### Setup:
 * load all dependencies from pom.xml file
+* please, contact one of the contributors to get the token for bot
 
 ### Development:
 In order to get the Bot working, you need to:
