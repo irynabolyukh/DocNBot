@@ -1,4 +1,6 @@
 # DocNBot
+* This bot was created to chat about people's health conditions, give them recommendations and cheer up.
+
 ### Requirements:
 * JDK 1.8
 ### Setup:
