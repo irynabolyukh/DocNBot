@@ -50,7 +50,7 @@ public class DocBot extends TelegramLongPollingBot {
     }
 
     public String getBotToken() {
-        return "1221107279:AAELDUoVdMPkzcNM8Z4QdwqjGuesP9UiQ-4";
+        return "please_contact_contributors";
     }
 
 }
