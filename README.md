@@ -9,3 +9,6 @@ In order to get the Bot working, you need to:
 * run the project
 * go to the telegram and find @docHelpNaUKMA_bot
 * type /start
+
+### GitHub link:
+* https://github.com/svakulenko22/DocNBot
