@@ -45,11 +45,11 @@ public class AnswerGenerator {
          } else if (input.contains(" or ")) {
             return "I think, I would prefer the " + (rand.nextInt(2) == 1 ? "first" : "second") + " option.";
 
-         } else if (input.contains("what")) {
+         } else if (input.contains("what") || input.contains("do you like") || input.contains("do you love")) {
             return "I don't know. What about you?";
 
          } else {
-            int randInt = rand.nextInt(9);
+            int randInt = rand.nextInt(8);
             return (String) que.get(String.valueOf(randInt));
          }
 
