@@ -49,6 +49,8 @@ public class DocBot extends TelegramLongPollingBot {
         return "docHelpNaUKMA_bot";
     }
 
-
+    public String getBotToken() {
+        return "please_contact_contributors";
+    }
 
 }
