@@ -46,7 +46,7 @@ public class DocBot extends TelegramLongPollingBot {
 
 
     public String getBotUsername() {
-        return "docHelpNaUKMA_bot";
+        return "kma_AI_bot";
     }
 
 
